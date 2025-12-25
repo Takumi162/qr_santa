@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <title>たくみはサンタクロース</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <div class="content">
+    <div id="hint" class="text"></div>
+  </div>
+
+  <script>
+    const FRAME_COLORS = {
+      T2b: "#0c660b",
+      T3c: "#ef952e",
+      T4d: "#ff5858",
+      T5e: "#0b06a4",
+      T6f: "#a56627",
+      T7g: "#000000ef",
+      T8h: "#1f3a8a",
+    };
+
+    const HINTS = {
+      T2b: { type: "text", content: "帆奈はそれを忘れがち。\n今日は閉めたかい？その扉。" },
+      T3c: { type: "image", src: "pig.png", alt: "豚の写真" },
+      T4d: { type: "text", content: "クリスマス前夜、\n2人の冒険家は魔法の水を求めてドラゴンの元へ。" },
+      T5e: { type: "text", content: "クロネコが来た。" },
+      T6f: { type: "text", content: "洗濯物を片付けなければ気づかない。\nいや、洗濯物を片付けただけでは見つからないぞ？" },
+      T7g: { type: "text", content: "毎日座る椅子。\n椅子？プレゼントは羊のそばに。" },
+      T8h: { type: "text", content: "プレゼントは以上。\nさぁ、ケーキを食べよう。" },
+    };
+
+    const params = new URLSearchParams(location.search);
+    const key = params.get("n");
+    const container = document.getElementById("hint");
+    const content = document.querySelector(".content");
+
+    if (!key || !HINTS[key]) {
+      document.body.innerHTML = "<p>このQRは無効です</p>";
+    } else {
+      document.documentElement.style.setProperty(
+        "--frame-color",
+        FRAME_COLORS[key] || "#1f3a8a"
+      );
+
+      const hint = HINTS[key];
+
+      if (hint.type === "text") {
+        container.textContent = hint.content;
+      } else {
+        /* ★ 画像用レイアウトに切り替え */
+        content.classList.add("image");
+
+        const img = document.createElement("img");
+        img.src = hint.src;
+        img.alt = hint.alt || "";
+        container.appendChild(img);
+      }
+    }
+  </script>
+</body>
+</html>

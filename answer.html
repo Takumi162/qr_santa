@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <title>たくみはサンタクロース</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <div class="content">
+    <div id="answer" class="text"></div>
+
+    <a id="next" href="" style="display:none;">
+      <button id="nextButton">次のヒント</button>
+    </a>
+  </div>
+
+  <script>
+    const FRAME_COLORS = {
+      T1a: "#0c660b",
+      T2b: "#0c660b",
+      T3c: "#ef952e",
+      T4d: "#ff5858",
+      T5e: "#0b06a4",
+      T6f: "#a56627",
+      T7g: "#000000ef",
+      T8h: "#1f3a8a",
+    };
+
+    const ANSWERS = {
+      T1a: "メリークリスマス。\nプレゼントはブラックサンタが隠したよ。",
+      T2b: "何かと不満の多いお年頃の帆奈に。\n兄からのささやかなお小遣い。",
+      T3c: "忙しない日々を送る姉に。\n\n嫌なことがあった日、\nいつもより頑張った日にホッと一息。",
+      T4d: "何かと不満の多いお年頃の帆奈に。\n兄からのささやかなお小遣い。パート2。",
+      T5e: "姉に。1人で食べるもよし。\nみんなで食べるもよし。",
+      T6f: "受験を控える帆奈に。\n糖分をたっぷりプレゼント。",
+      T7g: "齧られすぎて脛のない母へ。\n\nそのパン屋、そのレシピ。\n楽しい思い出を楽しく残せるプレゼント。",
+      T8h: "会議中も、電話中も。\nご飯の時間をスマートにお知らせ。",
+    };
+
+    const NEXT = {
+      T1a: "T2b",
+      T2b: "T3c",
+      T3c: "T4d",
+      T4d: "T5e",
+      T5e: "T6f",
+      T6f: "T7g",
+      T7g: "T8h",
+    };
+
+    const params = new URLSearchParams(location.search);
+    const key = params.get("n");
+
+    if (!key || !ANSWERS[key]) {
+      document.body.innerHTML = "<p>このQRは無効です</p>";
+    } else {
+      // 枠線の色を問題ごとに変更
+      document.documentElement.style.setProperty(
+        "--frame-color",
+        FRAME_COLORS[key] || "#1f3a8a"
+      );
+
+      // 答え文を表示
+      document.getElementById("answer").textContent = ANSWERS[key];
+
+      // 次がある場合のみボタン表示
+      if (NEXT[key]) {
+        const next = document.getElementById("next");
+        const button = document.getElementById("nextButton");
+
+        next.href = `hint.html?n=${NEXT[key]}`;
+        next.style.display = "inline";
+
+        // 最初だけ文言変更
+        if (key === "T1a") {
+          button.textContent = "ヒントをみる";
+        }
+      }
+    }
+  </script>
+</body>
+</html>
