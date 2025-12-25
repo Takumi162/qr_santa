@@ -13,7 +13,7 @@ html, body {
 }
 
 body {
-  border: 18px solid var(--frame-color); /* ← 枠線の太さそのまま */
+  border: 24px solid var(--frame-color); /* ← 枠線の太さそのまま */
   display: flex;
   justify-content: center;
   align-items: center;
